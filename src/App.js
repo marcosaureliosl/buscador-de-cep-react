@@ -71,7 +71,7 @@ function App() {
       <div className="containerInput">
         <input
           type="text"
-          placeholder="Digite seu CEP..."
+          placeholder="Digite um CEP..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
