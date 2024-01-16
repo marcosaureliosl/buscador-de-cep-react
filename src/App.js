@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import './styles.css';
@@ -64,10 +63,14 @@ function App() {
     }
   }
 
+  function hasAnyData() {
+    return cepData && (cepData.logradouro || cepData.complemento || cepData.bairro || cepData.localidade || cepData.uf);
+  }
+
   return (
     <div className="container">
       <h1 className="title"> Buscador de CEP </h1>
-
+  
       <div className="containerInput">
         <input
           type="text"
@@ -76,29 +79,28 @@ function App() {
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
         />
-
+  
         <button className="buttonSearch" onClick={handleSearch} disabled={isLoading}>
           <FiSearch size={25} color="#fff" />
         </button>
       </div>
-
-
-      <main className={`main ${isLoading || error || !cepData?.cep ? 'mobile-hide' : ''}`}>
-  {isLoading && <p>Carregando...</p>}
-  {error && <p className="error">{error}</p>}
-  {cepData?.cep && (
-    <>
-      <h2>CEP: {cepData.cep}</h2>
-      <span> Rua: {cepData.logradouro}</span>
-      {cepData.complemento && <span> Complemento: {cepData.complemento}</span>}
-      <span> Bairro: {cepData.bairro}</span>
-      <span> Cidade: {cepData.localidade} - {cepData.uf}</span>
-    </>
-  )}
-</main>
+  
+      <main className={`main ${isLoading || error || !cepData?.cep || !hasAnyData() ? 'mobile-hide' : ''}`}>
+        {isLoading && <p>Carregando...</p>}
+        {error && <p className="error">{error}</p>}
+        {!isLoading && cepData?.cep && hasAnyData() && (
+          <>
+            <h2>CEP: {cepData.cep}</h2>
+            <span> Rua: {cepData.logradouro}</span>
+            {cepData.complemento && <span> Complemento: {cepData.complemento}</span>}
+            <span> Bairro: {cepData.bairro}</span>
+            <span> Cidade: {cepData.localidade} - {cepData.uf}</span>
+          </>
+        )}
+      </main>
+  
     </div>
   );
 }
 
 export default App;
-

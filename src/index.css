@@ -90,7 +90,7 @@ span {
     width: 100%;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 500px) {
   .mobile-hide {
     display: none;
   }
